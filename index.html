@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>瞬間英作文 100</title>
+<meta name="theme-color" content="#1f3a5f">
+<style>
+:root{
+  --bg:#f5f3ee;--card:#ffffff;--ink:#1d2430;--sub:#6b7280;--line:#e5e1d8;
+  --brand:#1f3a5f;--brand2:#2f5d8c;--accent:#e08a2e;
+  --ok:#1e8a5a;--okbg:#e4f5ec;--mid:#b7791f;--midbg:#fdf3e1;--ng:#c0392b;--ngbg:#fbe9e7;
+}
+@media (prefers-color-scheme: dark){
+  :root{--bg:#14181f;--card:#1e242e;--ink:#e8eaee;--sub:#9aa3b2;--line:#2c3440;
+  --brand:#8fb4e0;--brand2:#a9c6ea;--okbg:#173527;--midbg:#3a2e17;--ngbg:#3d1f1c;}
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.6}
+.wrap{max-width:640px;margin:0 auto;padding:16px 16px calc(32px + env(safe-area-inset-bottom))}
+header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+header h1{font-size:20px;margin:0;color:var(--brand);letter-spacing:.02em}
+.iconbtn{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:8px 12px;font-size:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:14px}
+.muted{color:var(--sub);font-size:13px}
+h2{font-size:15px;margin:0 0 10px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center}
+.stat{border-radius:12px;padding:10px 4px;background:var(--bg)}
+.stat b{display:block;font-size:20px}
+.stat span{font-size:11px;color:var(--sub)}
+.s-ok b{color:var(--ok)}.s-mid b{color:var(--mid)}.s-ng b{color:var(--ng)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:999px;padding:8px 14px;font-size:14px}
+.chip.on{background:var(--brand);border-color:var(--brand);color:#fff}
+@media (prefers-color-scheme: dark){.chip.on{color:#10141a}}
+.btn{display:block;width:100%;border:none;border-radius:12px;padding:14px;font-size:16px;font-weight:600;background:var(--brand);color:#fff}
+@media (prefers-color-scheme: dark){.btn{color:#10141a}}
+.btn.sec{background:var(--bg);color:var(--ink);border:1px solid var(--line)}
+.btn:disabled{opacity:.5}
+.row{display:flex;gap:10px}.row>*{flex:1}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-size:13px;color:var(--sub)}
+.tag{display:inline-block;background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:2px 10px;font-size:12px;color:var(--sub)}
+.type{font-size:12px;font-weight:700;color:var(--accent);margin-bottom:6px}
+.ja{font-size:22px;font-weight:700;line-height:1.5}
+.qen{font-size:21px;font-weight:700;line-height:1.45;display:flex;gap:10px;align-items:flex-start}
+.qja{font-size:14px;color:var(--sub);margin-top:4px}
+.hint{margin-top:12px;background:var(--bg);border-radius:10px;padding:10px 12px;font-size:14px}
+.say{border:none;background:var(--bg);border-radius:50%;width:38px;height:38px;flex:0 0 38px;font-size:17px}
+textarea{width:100%;min-height:84px;border:1px solid var(--line);border-radius:12px;padding:12px;font-size:17px;background:var(--bg);color:var(--ink);font-family:inherit;resize:vertical}
+textarea:focus{outline:2px solid var(--brand2);border-color:transparent}
+.mic{border:none;border-radius:12px;padding:14px;font-size:16px;font-weight:600;background:var(--accent);color:#fff}
+.mic.rec{background:var(--ng);animation:pulse 1.2s infinite}
+@keyframes pulse{50%{opacity:.7}}
+.verdict{border-radius:12px;padding:12px 14px;font-weight:700;font-size:17px;margin-bottom:12px}
+.v-perfect{background:var(--okbg);color:var(--ok)}
+.v-good{background:var(--midbg);color:var(--mid)}
+.v-fix{background:var(--ngbg);color:var(--ng)}
+.lbl{font-size:12px;color:var(--sub);margin:10px 0 2px}
+.en{font-size:17px;display:flex;gap:8px;align-items:center}
+.comment{font-size:14px;background:var(--bg);border-radius:10px;padding:10px 12px;margin-top:10px;white-space:pre-wrap}
+.hidden{display:none!important}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:flex-end;justify-content:center;z-index:10}
+.sheet{background:var(--card);width:100%;max-width:640px;border-radius:18px 18px 0 0;padding:20px 16px calc(24px + env(safe-area-inset-bottom));max-height:90vh;overflow:auto}
+input[type=text],input[type=password],select{width:100%;border:1px solid var(--line);border-radius:10px;padding:11px;font-size:16px;background:var(--bg);color:var(--ink)}
+label.sw{display:flex;align-items:center;justify-content:space-between;padding:8px 0;font-size:15px}
+.spin{display:inline-block;width:16px;height:16px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:r .8s linear infinite;vertical-align:-3px;margin-right:6px}
+@keyframes r{to{transform:rotate(360deg)}}
+.list{font-size:14px}
+.list div{display:flex;gap:8px;padding:7px 0;border-bottom:1px solid var(--line)}
+.list div span:first-child{flex:0 0 22px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>瞬間英作文 100</h1>
+    <button class="iconbtn" id="openSettings">⚙︎ 設定</button>
+  </header>
+
+  <!-- HOME -->
+  <section id="home">
+    <div class="card">
+      <h2>これまでの成績</h2>
+      <div class="stats">
+        <div class="stat s-ok"><b id="stOk">0</b><span>◎ 完璧</span></div>
+        <div class="stat s-mid"><b id="stMid">0</b><span>○ ある程度</span></div>
+        <div class="stat s-ng"><b id="stNg">0</b><span>△ 要修正</span></div>
+        <div class="stat"><b id="stNew">100</b><span>未回答</span></div>
+      </div>
+      <p class="muted" id="apiNote" style="margin:10px 0 0"></p>
+    </div>
+    <div class="card">
+      <h2>シーン</h2>
+      <div class="chips" id="cats"></div>
+    </div>
+    <div class="card">
+      <h2>出題方法</h2>
+      <div class="chips" id="modes"></div>
+      <div style="height:14px"></div>
+      <button class="btn" id="start">スタート</button>
+      <p class="muted" id="startNote" style="margin:8px 0 0;text-align:center"></p>
+    </div>
+    <div class="card">
+      <h2>問題一覧</h2>
+      <div class="list" id="list"></div>
+    </div>
+  </section>
+
+  <!-- PRACTICE -->
+  <section id="practice" class="hidden">
+    <div class="topbar">
+      <button class="iconbtn" id="back">← 戻る</button>
+      <span id="progress"></span>
+    </div>
+    <div class="card" id="qcard"></div>
+
+    <div class="card" id="answerBox">
+      <textarea id="answer" placeholder="英語で入力（キーボードのマイクも使えます）" autocapitalize="sentences" autocomplete="off" spellcheck="false"></textarea>
+      <div style="height:10px"></div>
+      <div class="row">
+        <button class="mic" id="mic">🎤 話す</button>
+        <button class="btn" id="judge">判定する</button>
+      </div>
+      <div style="height:10px"></div>
+      <button class="btn sec" id="reveal">わからない → 答えを見る</button>
+      <p class="muted hidden" id="micNote" style="margin:8px 0 0"></p>
+    </div>
+
+    <div class="card hidden" id="resultBox"></div>
+  </section>
+</div>
+
+<!-- SETTINGS -->
+<div class="modal hidden" id="settings">
+  <div class="sheet">
+    <h2>設定</h2>
+    <div class="lbl">Anthropic APIキー（AI判定に使用・この端末にだけ保存）</div>
+    <input type="password" id="apiKey" placeholder="sk-ant-..." autocomplete="off">
+    <p class="muted">キー未入力のときは、模範解答との一致度で簡易判定します。</p>
+    <div class="lbl">モデル</div>
+    <input type="text" id="model">
+    <div style="height:8px"></div>
+    <label class="sw">英語の質問を自動で読み上げ <input type="checkbox" id="autoSpeak"></label>
+    <label class="sw">読み上げ速度
+      <select id="rate" style="width:auto">
+        <option value="0.8">ゆっくり</option><option value="0.95">ふつう</option><option value="1.1">はやめ</option>
+      </select>
+    </label>
+    <div style="height:12px"></div>
+    <button class="btn" id="closeSettings">閉じる</button>
+    <div style="height:10px"></div>
+    <button class="btn sec" id="resetData">成績をリセット</button>
+  </div>
+</div>
+
+<script>
+/* =========================================================
+   問題データ
+   type: "t" = 日本語→英語（瞬間英作文）
+         "r" = 英語の質問に英語で答える
+   ja: 日本語の例文（tの場合は問題文 / rの場合は答えたい内容のヒント）
+   q / qja: 英語の質問とその日本語訳（rのみ）
+   en: 模範解答   alt: 別解（簡易判定にも使用）
+   ========================================================= */
+const CATS = {
+  H:"🏨 ホテル", R:"🍽 レストラン", S:"🛍 買い物", T:"✈️ 空港・交通", D:"💬 日常会話", E:"🆘 トラブル・体調"
+};
+const Q = [
+// ---- ホテル ----
+{c:"H",t:"t",ja:"チェックインをお願いします。予約しています。",en:"I'd like to check in, please. I have a reservation.",alt:["Check in, please. I have a reservation.","I'd like to check in. I have a booking."]},
+{c:"H",t:"r",q:"May I have your name, please?",qja:"お名前を伺えますか？",ja:"自分の名前（松丸ケント）を伝える",en:"Sure. It's Kento Matsumaru.",alt:["My name is Kento Matsumaru.","It's Kento Matsumaru."]},
+{c:"H",t:"r",q:"How many nights will you be staying?",qja:"何泊のご予定ですか？",ja:"3泊と答える",en:"I'll be staying for three nights.",alt:["Three nights.","For three nights."]},
+{c:"H",t:"t",ja:"朝食は何時からですか？",en:"What time does breakfast start?",alt:["What time is breakfast served?","When does breakfast start?"]},
+{c:"H",t:"t",ja:"Wi-Fiのパスワードを教えてもらえますか？",en:"Could you tell me the Wi-Fi password?",alt:["What's the Wi-Fi password?","Can I have the Wi-Fi password?"]},
+{c:"H",t:"r",q:"Would you like a room with an ocean view?",qja:"海の見えるお部屋をご希望ですか？",ja:"興味はあるが、追加料金がかかるか確認したい",en:"Yes, but does it cost extra?",alt:["That sounds nice. Is there an extra charge?","Yes, is there an additional charge?"]},
+{c:"H",t:"t",ja:"部屋のエアコンが動かないんです。",en:"The air conditioner in my room isn't working.",alt:["The air conditioning in my room doesn't work.","The AC in my room isn't working."]},
+{c:"H",t:"t",ja:"荷物を預かってもらえますか？",en:"Could you hold my luggage for me?",alt:["Can you keep my bags?","Could you keep my luggage?"]},
+{c:"H",t:"t",ja:"チェックアウトを1時間遅らせることはできますか？",en:"Is it possible to check out an hour later?",alt:["Can I check out one hour late?","Could I get a one-hour late checkout?"]},
+{c:"H",t:"r",q:"Do you need any help with your luggage?",qja:"お荷物をお運びしましょうか？",ja:"大丈夫だと丁寧に断る",en:"No, thank you. I can manage.",alt:["I'm fine, thank you.","No thanks, I'm okay."]},
+{c:"H",t:"t",ja:"タオルをもう2枚いただけますか？",en:"Could I have two more towels, please?",alt:["Can I get two more towels?","May I have two extra towels?"]},
+{c:"H",t:"t",ja:"近くにおすすめのレストランはありますか？",en:"Is there a restaurant nearby you'd recommend?",alt:["Can you recommend a good restaurant nearby?","Are there any good restaurants around here?"]},
+{c:"H",t:"r",q:"How would you like to pay?",qja:"お支払い方法はいかがなさいますか？",ja:"クレジットカードで払う",en:"I'll pay by credit card.",alt:["By credit card, please.","Credit card, please."]},
+{c:"H",t:"t",ja:"明日の朝6時にタクシーを呼んでもらえますか？",en:"Could you call a taxi for me at six tomorrow morning?",alt:["Can you book a taxi for 6 a.m. tomorrow?","Could you get me a taxi at 6 tomorrow morning?"]},
+{c:"H",t:"t",ja:"鍵を部屋に置いたまま閉めてしまいました。",en:"I locked myself out of my room.",alt:["I left my key in my room and locked the door.","I left my key inside the room."]},
+{c:"H",t:"r",q:"Is this your first time staying with us?",qja:"当ホテルのご利用は初めてですか？",ja:"いいえ、2回目だと答える",en:"No, this is my second time.",alt:["No, it's my second time.","No, I've stayed here once before."]},
+{c:"H",t:"t",ja:"隣の部屋がうるさくて眠れません。",en:"The room next door is so noisy that I can't sleep.",alt:["The people next door are too loud and I can't sleep.","It's too noisy next door to sleep."]},
+{c:"H",t:"t",ja:"空港までのシャトルバスはありますか？",en:"Is there a shuttle bus to the airport?",alt:["Do you have an airport shuttle?","Is there an airport shuttle bus?"]},
+{c:"H",t:"r",q:"Did you take anything from the minibar?",qja:"ミニバーのご利用はございましたか？",ja:"水を1本飲んだと伝える",en:"Yes, I had a bottle of water.",alt:["Just one bottle of water.","Yes, one bottle of water."]},
+{c:"H",t:"t",ja:"領収書をいただけますか？",en:"Could I have a receipt, please?",alt:["Can I get a receipt?","May I have a receipt?"]},
+// ---- レストラン ----
+{c:"R",t:"t",ja:"2人です。予約はしていません。",en:"A table for two, please. We don't have a reservation.",alt:["Two people, please. We don't have a reservation.","Table for two. No reservation."]},
+{c:"R",t:"r",q:"Do you have a reservation?",qja:"ご予約はございますか？",ja:"7時に松丸の名前で予約していると伝える",en:"Yes, I have a reservation for seven under Matsumaru.",alt:["Yes, at seven o'clock under the name Matsumaru.","Yes, it's under Matsumaru for seven."]},
+{c:"R",t:"t",ja:"窓際の席は空いていますか？",en:"Do you have a table by the window?",alt:["Is there a window seat available?","Can we sit by the window?"]},
+{c:"R",t:"r",q:"Are you ready to order?",qja:"ご注文はお決まりですか？",ja:"まだなので、もう少し時間がほしい",en:"Not yet. Could we have a few more minutes?",alt:["Not yet. Can we have a little more time?","We need a few more minutes, please."]},
+{c:"R",t:"t",ja:"おすすめは何ですか？",en:"What do you recommend?",alt:["What would you recommend?","What's your recommendation?"]},
+{c:"R",t:"t",ja:"これはどんな料理ですか？",en:"What kind of dish is this?",alt:["What is this dish like?","Can you tell me about this dish?"]},
+{c:"R",t:"r",q:"How would you like your steak?",qja:"ステーキの焼き加減はいかがなさいますか？",ja:"ミディアムレアで",en:"Medium rare, please.",alt:["I'd like it medium rare.","Medium rare."]},
+{c:"R",t:"t",ja:"私はエビにアレルギーがあります。",en:"I'm allergic to shrimp.",alt:["I have a shrimp allergy.","I have an allergy to shrimp."]},
+{c:"R",t:"r",q:"Would you like something to drink?",qja:"お飲み物はいかがですか？",ja:"炭酸水を頼む",en:"I'll have a sparkling water, please.",alt:["Sparkling water, please.","Can I get a sparkling water?"]},
+{c:"R",t:"t",ja:"同じものをお願いします。",en:"I'll have the same.",alt:["The same for me, please.","Same for me, please."]},
+{c:"R",t:"t",ja:"注文したものがまだ来ていません。",en:"My order hasn't come yet.",alt:["I'm still waiting for my order.","My food hasn't arrived yet."]},
+{c:"R",t:"r",q:"How is everything?",qja:"お料理はいかがですか？",ja:"とてもおいしいと伝える",en:"Everything is delicious, thank you.",alt:["It's very good, thank you.","It's delicious, thanks."]},
+{c:"R",t:"t",ja:"取り皿をもらえますか？",en:"Could we have some extra plates?",alt:["Can we get some small plates for sharing?","Could we have some plates to share?"]},
+{c:"R",t:"r",q:"Would you like to see the dessert menu?",qja:"デザートメニューはご覧になりますか？",ja:"お腹がいっぱいなので結構です",en:"No, thanks. I'm full.",alt:["I'm full, thank you.","No thank you, I'm too full."]},
+{c:"R",t:"t",ja:"お会計をお願いします。",en:"Could we have the check, please?",alt:["Check, please.","Can I have the bill, please?"]},
+{c:"R",t:"t",ja:"別々に払えますか？",en:"Can we pay separately?",alt:["Could we split the bill?","Can we have separate checks?"]},
+{c:"R",t:"t",ja:"残りを持ち帰りたいのですが。",en:"Could I get a box for the rest?",alt:["Can I take the rest home?","Could I get this to go?"]},
+{c:"R",t:"r",q:"For here or to go?",qja:"店内でお召し上がりですか、お持ち帰りですか？",ja:"持ち帰りで",en:"To go, please.",alt:["To go.","Take out, please."]},
+{c:"R",t:"t",ja:"これは注文したものと違うと思います。",en:"I think this isn't what I ordered.",alt:["I don't think this is what I ordered.","This isn't what I ordered."]},
+{c:"R",t:"t",ja:"チップはお会計に含まれていますか？",en:"Is the tip included in the bill?",alt:["Is service included?","Does the bill include the tip?"]},
+// ---- 買い物 ----
+{c:"S",t:"t",ja:"見ているだけです。ありがとう。",en:"I'm just looking, thanks.",alt:["Just looking, thank you.","I'm just browsing, thanks."]},
+{c:"S",t:"r",q:"Can I help you find something?",qja:"何かお探しですか？",ja:"妻へのプレゼントを探している",en:"Yes, I'm looking for a gift for my wife.",alt:["I'm looking for a present for my wife.","Yes, a gift for my wife."]},
+{c:"S",t:"t",ja:"これのもっと小さいサイズはありますか？",en:"Do you have this in a smaller size?",alt:["Is there a smaller size?","Do you have a smaller one?"]},
+{c:"S",t:"t",ja:"試着してもいいですか？",en:"Can I try this on?",alt:["May I try this on?","Could I try it on?"]},
+{c:"S",t:"t",ja:"これはいくらですか？",en:"How much is this?",alt:["How much does this cost?","What's the price of this?"]},
+{c:"S",t:"r",q:"Would you like a bag?",qja:"袋はご入用ですか？",ja:"自分の袋があるので不要",en:"No, thanks. I have my own bag.",alt:["I'm fine, I have a bag.","No thank you, I brought my own."]},
+{c:"S",t:"t",ja:"免税で買えますか？",en:"Can I buy this tax-free?",alt:["Is this tax-free?","Can I get a tax refund on this?"]},
+{c:"S",t:"t",ja:"プレゼント用に包んでもらえますか？",en:"Could you gift-wrap this, please?",alt:["Can you wrap this as a gift?","Could you wrap it as a present?"]},
+{c:"S",t:"t",ja:"少し考えさせてください。",en:"Let me think about it.",alt:["I'll think about it.","Let me think it over."]},
+{c:"S",t:"t",ja:"これを返品したいのですが。",en:"I'd like to return this.",alt:["I want to return this.","Can I return this?"]},
+{c:"S",t:"r",q:"Do you have the receipt?",qja:"レシートはお持ちですか？",ja:"はい、ここにありますと渡す",en:"Yes, here it is.",alt:["Yes, here you are.","Yes, here you go."]},
+{c:"S",t:"t",ja:"カードは使えますか？",en:"Do you take credit cards?",alt:["Can I pay by card?","Do you accept credit cards?"]},
+// ---- 空港・交通 ----
+{c:"T",t:"r",q:"What's the purpose of your visit?",qja:"渡航の目的は何ですか？",ja:"仕事で来たと答える",en:"I'm here on business.",alt:["Business.","For business."]},
+{c:"T",t:"r",q:"How long will you be staying?",qja:"滞在期間はどのくらいですか？",ja:"1週間と答える",en:"I'll be staying for a week.",alt:["One week.","For one week."]},
+{c:"T",t:"t",ja:"通路側の席にしてもらえますか？",en:"Could I have an aisle seat, please?",alt:["I'd like an aisle seat.","Can I get an aisle seat?"]},
+{c:"T",t:"r",q:"Do you have any bags to check?",qja:"お預けになるお荷物はありますか？",ja:"スーツケースが1つ",en:"Yes, just one suitcase.",alt:["Yes, one suitcase.","Just this one suitcase."]},
+{c:"T",t:"t",ja:"私の荷物が出てきません。",en:"My baggage hasn't come out.",alt:["My luggage didn't arrive.","I can't find my baggage."]},
+{c:"T",t:"t",ja:"乗り継ぎに間に合うか心配です。",en:"I'm worried I won't make my connecting flight.",alt:["I'm afraid I'll miss my connection.","I'm worried about missing my connecting flight."]},
+{c:"T",t:"t",ja:"市内へ行くにはどうすればいいですか？",en:"How can I get to the city center?",alt:["What's the best way to get downtown?","How do I get to the city center?"]},
+{c:"T",t:"t",ja:"この住所までお願いします。",en:"Please take me to this address.",alt:["To this address, please.","Could you take me to this address?"]},
+{c:"T",t:"r",q:"Where to?",qja:"どちらまで？",ja:"グランドホテルまでと伝える",en:"To the Grand Hotel, please.",alt:["The Grand Hotel, please.","Could you take me to the Grand Hotel?"]},
+{c:"T",t:"t",ja:"空港までどのくらい時間がかかりますか？",en:"How long does it take to get to the airport?",alt:["How long is it to the airport?","How long will it take to the airport?"]},
+{c:"T",t:"t",ja:"この電車は中央駅に止まりますか？",en:"Does this train stop at Central Station?",alt:["Does this train go to Central Station?","Will this train stop at Central Station?"]},
+{c:"T",t:"t",ja:"切符はどこで買えますか？",en:"Where can I buy a ticket?",alt:["Where can I get a ticket?","Where do I buy tickets?"]},
+{c:"T",t:"t",ja:"次の駅で降ります。",en:"I'm getting off at the next station.",alt:["I'll get off at the next stop.","I'm getting off at the next stop."]},
+{c:"T",t:"r",q:"Do you have anything to declare?",qja:"申告するものはありますか？",ja:"何もないと答える",en:"No, I have nothing to declare.",alt:["No, nothing to declare.","Nothing to declare."]},
+{c:"T",t:"t",ja:"一番近い駅はどこですか？",en:"Where is the nearest station?",alt:["Where's the closest station?","Which is the nearest station?"]},
+{c:"T",t:"t",ja:"ここで止めてください。",en:"Could you stop here, please?",alt:["Please stop here.","Stop here, please."]},
+// ---- 日常会話 ----
+{c:"D",t:"r",q:"Where are you from?",qja:"どちらのご出身ですか？",ja:"日本の東京の近くと答える",en:"I'm from Japan, near Tokyo.",alt:["I'm from Japan. I live near Tokyo.","Japan, near Tokyo."]},
+{c:"D",t:"r",q:"What do you do?",qja:"お仕事は何をされていますか？",ja:"健康食品の会社で働いていると答える",en:"I work for a health products company.",alt:["I work at a company that sells health products.","I'm in the health products business."]},
+{c:"D",t:"r",q:"How was your weekend?",qja:"週末はどうだった？",ja:"家族と出かけてリラックスできた",en:"It was great. I went out with my family and relaxed.",alt:["Good. I spent time with my family and relaxed.","It was nice. I relaxed with my family."]},
+{c:"D",t:"t",ja:"お会いできてうれしいです。",en:"Nice to meet you.",alt:["It's nice to meet you.","I'm glad to meet you."]},
+{c:"D",t:"t",ja:"最近どうですか？",en:"How have you been lately?",alt:["How have you been?","How are things these days?"]},
+{c:"D",t:"t",ja:"ここに来るのは初めてです。",en:"This is my first time here.",alt:["It's my first time here.","I've never been here before."]},
+{c:"D",t:"r",q:"What do you think of this city?",qja:"この街はどう？",ja:"気に入った。食べ物がおいしくて人が親切",en:"I love it. The food is great and the people are friendly.",alt:["I really like it. The food is good and people are kind.","It's great. Good food and friendly people."]},
+{c:"D",t:"t",ja:"もう一度言ってもらえますか？",en:"Could you say that again, please?",alt:["Sorry, could you repeat that?","Pardon?"]},
+{c:"D",t:"t",ja:"もう少しゆっくり話してもらえますか？",en:"Could you speak a little more slowly?",alt:["Could you speak more slowly, please?","Can you slow down a little?"]},
+{c:"D",t:"t",ja:"それはどういう意味ですか？",en:"What does that mean?",alt:["What do you mean by that?","What does it mean?"]},
+{c:"D",t:"r",q:"Do you have any plans for tonight?",qja:"今夜は何か予定ある？",ja:"特にない。相手にも聞き返す",en:"Nothing special. How about you?",alt:["Not really. What about you?","No plans yet. How about you?"]},
+{c:"D",t:"t",ja:"写真を撮ってもらえますか？",en:"Could you take a picture of us?",alt:["Would you take a photo for us?","Could you take our picture?"]},
+{c:"D",t:"t",ja:"今日はいい天気ですね。",en:"It's a beautiful day today, isn't it?",alt:["Nice weather today, isn't it?","The weather is nice today."]},
+{c:"D",t:"r",q:"Have you tried the local food yet?",qja:"地元の料理はもう食べた？",ja:"まだ。おすすめを聞き返す",en:"Not yet. What would you recommend?",alt:["Not yet. Any recommendations?","No, not yet. What do you recommend?"]},
+{c:"D",t:"t",ja:"連絡先を交換しませんか？",en:"Shall we exchange contact information?",alt:["Why don't we exchange contacts?","Can we exchange contact info?"]},
+{c:"D",t:"t",ja:"遅れてすみません。道が混んでいました。",en:"Sorry I'm late. The traffic was heavy.",alt:["Sorry for being late. There was a lot of traffic.","I'm sorry I'm late. I got stuck in traffic."]},
+{c:"D",t:"r",q:"Would you like to join us for dinner?",qja:"一緒に夕食どう？",ja:"喜んで。誘ってくれたお礼も言う",en:"I'd love to. Thanks for inviting me.",alt:["Sure, I'd love to. Thank you for asking.","That sounds great. Thanks for the invitation."]},
+{c:"D",t:"t",ja:"楽しい時間をありがとう。",en:"Thank you for a great time.",alt:["Thanks, I had a great time.","Thank you for a wonderful time."]},
+{c:"D",t:"r",q:"How long have you been studying English?",qja:"英語はどのくらい勉強しているの？",ja:"数年だが、まだ練習中",en:"For a few years, but I'm still practicing.",alt:["A few years, but I'm still learning.","For several years, but I still need practice."]},
+{c:"D",t:"t",ja:"また近いうちに会いましょう。",en:"Let's meet again soon.",alt:["Let's get together again soon.","Hope to see you again soon."]},
+// ---- トラブル・体調 ----
+{c:"E",t:"t",ja:"道に迷ってしまいました。",en:"I think I'm lost.",alt:["I'm lost.","I got lost."]},
+{c:"E",t:"t",ja:"財布をなくしました。",en:"I lost my wallet.",alt:["I've lost my wallet.","I can't find my wallet."]},
+{c:"E",t:"t",ja:"近くに薬局はありますか？",en:"Is there a pharmacy nearby?",alt:["Is there a drugstore around here?","Where's the nearest pharmacy?"]},
+{c:"E",t:"t",ja:"頭痛がします。",en:"I have a headache.",alt:["I've got a headache.","My head hurts."]},
+{c:"E",t:"r",q:"What seems to be the problem?",qja:"どうされましたか？",ja:"昨夜から熱があると伝える",en:"I've had a fever since last night.",alt:["I have had a fever since last night.","I've been running a fever since last night."]},
+{c:"E",t:"t",ja:"トイレはどこですか？",en:"Where is the restroom?",alt:["Where's the bathroom?","Where can I find the restroom?"]},
+{c:"E",t:"t",ja:"スマホの充電器を貸してもらえますか？",en:"Could I borrow a phone charger?",alt:["Can I borrow a charger for my phone?","Do you have a phone charger I could borrow?"]},
+{c:"E",t:"t",ja:"警察を呼んでください。",en:"Please call the police.",alt:["Call the police, please.","Could you call the police?"]},
+{c:"E",t:"r",q:"Are you okay?",qja:"大丈夫ですか？",ja:"大丈夫、少し疲れているだけ",en:"I'm fine, just a little tired.",alt:["I'm okay. I'm just a bit tired.","Yes, I'm just a little tired."]},
+{c:"E",t:"t",ja:"日本語を話せる人はいますか？",en:"Is there anyone who speaks Japanese?",alt:["Does anyone here speak Japanese?","Is there someone who can speak Japanese?"]},
+{c:"E",t:"t",ja:"この薬は1日何回飲めばいいですか？",en:"How many times a day should I take this medicine?",alt:["How often should I take this medicine?","How many times a day do I take this?"]},
+{c:"E",t:"t",ja:"手伝ってもらえますか？",en:"Could you help me, please?",alt:["Can you help me?","Could you give me a hand?"]}
+].map((x,i)=>({...x,id:i+1}));
+
+/* =========================================================
+   状態・保存
+   ========================================================= */
+const LS = {
+  get(k,d){try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}},
+  set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+};
+let results = LS.get("ske_results",{});   // {id: "perfect"|"good"|"fix"}
+let settings = Object.assign({apiKey:"",model:"claude-sonnet-5-5",autoSpeak:true,rate:"0.95"}, LS.get("ske_settings",{}));
+let selCats = new Set(Object.keys(CATS));
+let mode = "order";
+let queue = [], idx = 0, cur = null, answered = false;
+
+const $ = id => document.getElementById(id);
+const VER = {
+  perfect:{mark:"◎",label:"完璧に理解できる",cls:"v-perfect"},
+  good:{mark:"○",label:"ある程度理解できる",cls:"v-good"},
+  fix:{mark:"△",label:"修正した方がいい",cls:"v-fix"}
+};
+const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+/* =========================================================
+   ホーム
+   ========================================================= */
+function renderHome(){
+  const v = Object.values(results);
+  $("stOk").textContent = v.filter(x=>x==="perfect").length;
+  $("stMid").textContent = v.filter(x=>x==="good").length;
+  $("stNg").textContent = v.filter(x=>x==="fix").length;
+  $("stNew").textContent = Q.length - v.length;
+  $("apiNote").textContent = settings.apiKey ? "判定：AI（Claude）" : "判定：簡易（模範解答との一致度）— 設定でAPIキーを入れるとAI判定になります";
+
+  $("cats").innerHTML = Object.entries(CATS).map(([k,v])=>{
+    const n = Q.filter(q=>q.c===k).length;
+    return `<button class="chip ${selCats.has(k)?"on":""}" data-c="${k}">${v}（${n}）</button>`;
+  }).join("");
+  const modes = {order:"順番に",random:"ランダム",review:"△・○を復習",unanswered:"未回答のみ"};
+  $("modes").innerHTML = Object.entries(modes).map(([k,v])=>`<button class="chip ${mode===k?"on":""}" data-m="${k}">${v}</button>`).join("");
+
+  const pool = buildQueue();
+  $("startNote").textContent = `${pool.length}問が出題されます`;
+  $("start").disabled = pool.length===0;
+
+  $("list").innerHTML = Q.filter(q=>selCats.has(q.c)).map(q=>{
+    const r = results[q.id];
+    const m = r ? VER[r].mark : "・";
+    const txt = q.t==="t" ? q.ja : q.q;
+    return `<div><span>${m}</span><span>${q.id}. ${esc(txt)}</span></div>`;
+  }).join("");
+}
+function buildQueue(){
+  let p = Q.filter(q=>selCats.has(q.c));
+  if(mode==="review") p = p.filter(q=>results[q.id]==="fix"||results[q.id]==="good");
+  if(mode==="unanswered") p = p.filter(q=>!results[q.id]);
+  if(mode==="random"||mode==="review") p = shuffle([...p]);
+  return p;
+}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+
+$("cats").onclick = e=>{
+  const c = e.target.closest("[data-c]"); if(!c) return;
+  const k = c.dataset.c;
+  if(selCats.has(k)){ if(selCats.size>1) selCats.delete(k); } else selCats.add(k);
+  renderHome();
+};
+$("modes").onclick = e=>{
+  const m = e.target.closest("[data-m]"); if(!m) return;
+  mode = m.dataset.m; renderHome();
+};
+$("start").onclick = ()=>{
+  queue = buildQueue(); idx = 0;
+  if(!queue.length) return;
+  $("home").classList.add("hidden"); $("practice").classList.remove("hidden");
+  showQ();
+};
+$("back").onclick = ()=>{
+  stopRec(); speechSynthesis.cancel();
+  $("practice").classList.add("hidden"); $("home").classList.remove("hidden");
+  renderHome(); window.scrollTo(0,0);
+};
+
+/* =========================================================
+   出題
+   ========================================================= */
+function showQ(){
+  cur = queue[idx]; answered = false;
+  $("progress").textContent = `${idx+1} / ${queue.length}`;
+  const prev = results[cur.id] ? `<span class="tag">前回 ${VER[results[cur.id]].mark}</span>` : "";
+  let h = `<div style="display:flex;gap:6px;margin-bottom:10px"><span class="tag">${CATS[cur.c]}</span><span class="tag">No.${cur.id}</span>${prev}</div>`;
+  if(cur.t==="t"){
+    h += `<div class="type">日本語 → 英語</div><div class="ja">${esc(cur.ja)}</div>`;
+  }else{
+    h += `<div class="type">英語の質問に英語で答える</div>
+      <div class="qen"><span style="flex:1">${esc(cur.q)}</span><button class="say" onclick="speak(cur.q)">🔊</button></div>
+      <div class="qja">${esc(cur.qja)}</div>
+      <div class="hint">💡 答える内容：${esc(cur.ja)}</div>`;
+  }
+  $("qcard").innerHTML = h;
+  $("answer").value = "";
+  $("answerBox").classList.remove("hidden");
+  $("resultBox").classList.add("hidden");
+  $("judge").disabled = false;
+  window.scrollTo(0,0);
+  if(cur.t==="r" && settings.autoSpeak) setTimeout(()=>speak(cur.q),300);
+}
+
+/* =========================================================
+   読み上げ
+   ========================================================= */
+let enVoice = null;
+function pickVoice(){
+  const vs = speechSynthesis.getVoices();
+  enVoice = vs.find(v=>/en-US/i.test(v.lang)&&/Samantha|Google US|Aaron|Nicky/i.test(v.name)) || vs.find(v=>/en-US/i.test(v.lang)) || vs.find(v=>/^en/i.test(v.lang)) || null;
+}
+if("speechSynthesis" in window){ pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }
+function speak(t){
+  if(!("speechSynthesis" in window)) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(t);
+  u.lang = "en-US"; u.rate = parseFloat(settings.rate)||0.95;
+  if(enVoice) u.voice = enVoice;
+  speechSynthesis.speak(u);
+}
+
+/* =========================================================
+   音声入力
+   ========================================================= */
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+let rec = null, recOn = false, baseText = "";
+if(!SR){
+  $("mic").disabled = true;
+  $("micNote").textContent = "このブラウザは音声認識に未対応です。キーボードのマイクボタン（音声入力）をお使いください。";
+  $("micNote").classList.remove("hidden");
+}
+function startRec(){
+  if(!SR) return;
+  speechSynthesis.cancel();
+  rec = new SR();
+  rec.lang = "en-US"; rec.interimResults = true; rec.continuous = false; rec.maxAlternatives = 1;
+  baseText = $("answer").value.trim();
+  rec.onresult = e=>{
+    let txt = "";
+    for(let i=0;i<e.results.length;i++) txt += e.results[i][0].transcript;
+    $("answer").value = (baseText ? baseText+" " : "") + txt.trim();
+  };
+  rec.onerror = e=>{
+    if(e.error==="not-allowed"||e.error==="service-not-allowed"){
+      $("micNote").textContent = "マイクの使用が許可されていません。ブラウザの設定でマイクを許可してください。";
+      $("micNote").classList.remove("hidden");
+    }
+  };
+  rec.onend = ()=>{ recOn=false; $("mic").classList.remove("rec"); $("mic").textContent="🎤 話す"; };
+  try{ rec.start(); recOn = true; $("mic").classList.add("rec"); $("mic").textContent="■ 停止"; }catch(e){}
+}
+function stopRec(){ if(rec&&recOn){ try{rec.stop()}catch(e){} } }
+$("mic").onclick = ()=> recOn ? stopRec() : startRec();
+
+/* =========================================================
+   判定
+   ========================================================= */
+$("judge").onclick = async ()=>{
+  stopRec();
+  const ans = $("answer").value.trim();
+  if(!ans){ $("answer").focus(); return; }
+  $("judge").disabled = true;
+  $("judge").innerHTML = `<span class="spin"></span>判定中`;
+  let r;
+  try{
+    r = settings.apiKey ? await aiJudge(ans) : localJudge(ans);
+  }catch(err){
+    r = localJudge(ans);
+    r.comment = `（AI判定に失敗したため簡易判定しました：${err.message}）\n` + (r.comment||"");
+  }
+  $("judge").textContent = "判定する";
+  showResult(ans, r);
+};
+$("reveal").onclick = ()=>{
+  stopRec();
+  showResult("", {verdict:"fix", corrected:"", comment:"答えを確認しました。次回もう一度チャレンジしましょう。", natural:""});
+};
+
+function norm(s){
+  return s.toLowerCase()
+    .replace(/[’‘]/g,"'")
+    .replace(/\bi'm\b/g,"i am").replace(/\bit's\b/g,"it is").replace(/\bwhat's\b/g,"what is")
+    .replace(/\bwhere's\b/g,"where is").replace(/\bthat's\b/g,"that is").replace(/\bi'll\b/g,"i will")
+    .replace(/\bi'd\b/g,"i would").replace(/\bi've\b/g,"i have").replace(/\bwe'd\b/g,"we would")
+    .replace(/\byou'd\b/g,"you would").replace(/\bdon't\b/g,"do not").replace(/\bdoesn't\b/g,"does not")
+    .replace(/\bisn't\b/g,"is not").replace(/\bhasn't\b/g,"has not").replace(/\bdidn't\b/g,"did not")
+    .replace(/\bcan't\b/g,"cannot").replace(/\bwon't\b/g,"will not").replace(/\bthere's\b/g,"there is")
+    .replace(/\bwi-fi\b/g,"wifi").replace(/\b6\b/g,"six").replace(/\b7\b/g,"seven").replace(/\b2\b/g,"two").replace(/\b3\b/g,"three").replace(/\b1\b/g,"one")
+    .replace(/[^a-z0-9' ]+/g," ").replace(/\s+/g," ").trim().split(" ").filter(Boolean);
+}
+function lcs(a,b){
+  const dp = Array(b.length+1).fill(0);
+  for(let i=1;i<=a.length;i++){let prev=0;for(let j=1;j<=b.length;j++){const t=dp[j];dp[j]=a[i-1]===b[j-1]?prev+1:Math.max(dp[j],dp[j-1]);prev=t;}}
+  return dp[b.length];
+}
+function localJudge(ans){
+  const a = norm(ans);
+  const refs = [cur.en, ...(cur.alt||[])];
+  let best = 0, bestRef = cur.en;
+  for(const ref of refs){
+    const b = norm(ref);
+    const s = (2*lcs(a,b))/(a.length+b.length||1);
+    if(s>best){best=s;bestRef=ref;}
+  }
+  let verdict = best>=0.88 ? "perfect" : best>=0.55 ? "good" : "fix";
+  const pct = Math.round(best*100);
+  const comment = verdict==="perfect" ? `模範解答とほぼ一致しています（一致度 ${pct}%）。`
+    : verdict==="good" ? `近い表現です（一致度 ${pct}%）。模範解答と見比べて違いを確認しましょう。\n※簡易判定は表現の違いを厳しめに判定します。`
+    : `模範解答と大きく異なります（一致度 ${pct}%）。※言い方が違うだけで正しい場合もあります。AI判定ならより正確です。`;
+  return {verdict, corrected:"", comment, natural:bestRef!==cur.en?bestRef:""};
+}
+
+async function aiJudge(ans){
+  const task = cur.t==="t"
+    ? `【問題タイプ】日本語→英語の瞬間英作文\n【日本語】${cur.ja}`
+    : `【問題タイプ】英語の質問に英語で答える\n【質問】${cur.q}（${cur.qja}）\n【答えるべき内容】${cur.ja}`;
+  const prompt = `あなたは日本人学習者向けの英会話コーチです。旅行・ホテル・レストラン・日常会話の場面で、学習者の英語を判定してください。
+
+${task}
+【模範解答の例】${cur.en}
+【学習者の回答】${ans}
+
+判定基準（ネイティブが実際の場面で聞いてどう感じるか）：
+- "perfect"：文法・語彙ともに自然で、意図が完全に伝わる。模範解答と表現が違っても自然ならperfect。
+- "good"：意味は十分伝わるが、文法ミス・不自然な言い回し・失礼に聞こえる可能性などが少しある。
+- "fix"：意味が伝わりにくい、誤解される、答えるべき内容とずれている。
+注意：音声入力の場合があるため、大文字小文字・句読点・数字表記の違いは減点しないこと。
+
+次のJSONだけを出力してください（前後に文章を付けない）：
+{"verdict":"perfect|good|fix","corrected":"学習者の回答を最小限直した英文（perfectなら空文字）","natural":"この場面でネイティブがよく使う自然な言い方1つ","comment":"日本語で2〜3文。良い点と、直すべき点の理由を簡潔に"}`;
+
+  const res = await fetch("https://api.anthropic.com/v1/messages",{
+    method:"POST",
+    headers:{
+      "content-type":"application/json",
+      "x-api-key":settings.apiKey,
+      "anthropic-version":"2023-06-01",
+      "anthropic-dangerous-direct-browser-access":"true"
+    },
+    body:JSON.stringify({model:settings.model||"claude-sonnet-5-5",max_tokens:500,messages:[{role:"user",content:prompt}]})
+  });
+  if(!res.ok){
+    let msg = `HTTP ${res.status}`;
+    try{const j=await res.json(); if(j.error&&j.error.message) msg += " " + j.error.message;}catch(e){}
+    throw new Error(msg);
+  }
+  const data = await res.json();
+  const text = (data.content||[]).map(c=>c.text||"").join("");
+  const m = text.match(/\{[\s\S]*\}/);
+  if(!m) throw new Error("応答を読み取れませんでした");
+  const j = JSON.parse(m[0]);
+  if(!VER[j.verdict]) j.verdict = "good";
+  return j;
+}
+
+function showResult(ans, r){
+  answered = true;
+  results[cur.id] = r.verdict; LS.set("ske_results",results);
+  const v = VER[r.verdict];
+  let h = `<div class="verdict ${v.cls}">${v.mark} ${v.label}</div>`;
+  if(ans) h += `<div class="lbl">あなたの回答</div><div class="en">${esc(ans)}</div>`;
+  if(r.corrected && r.verdict!=="perfect") h += `<div class="lbl">修正例</div><div class="en"><span style="flex:1">${esc(r.corrected)}</span><button class="say" data-say="${esc(r.corrected)}">🔊</button></div>`;
+  h += `<div class="lbl">模範解答</div><div class="en"><span style="flex:1;font-weight:600">${esc(cur.en)}</span><button class="say" data-say="${esc(cur.en)}">🔊</button></div>`;
+  if(r.natural && r.natural!==cur.en) h += `<div class="lbl">ほかの言い方</div><div class="en"><span style="flex:1">${esc(r.natural)}</span><button class="say" data-say="${esc(r.natural)}">🔊</button></div>`;
+  if(cur.alt && cur.alt.length) h += `<div class="lbl">別解</div><div class="muted" style="font-size:14px">${cur.alt.map(esc).join("<br>")}</div>`;
+  if(r.comment) h += `<div class="comment">${esc(r.comment)}</div>`;
+  h += `<div style="height:14px"></div><div class="row"><button class="btn sec" id="retry">もう一度</button><button class="btn" id="next">${idx<queue.length-1?"次へ →":"終了"}</button></div>`;
+  $("resultBox").innerHTML = h;
+  $("resultBox").classList.remove("hidden");
+  $("answerBox").classList.add("hidden");
+  $("resultBox").scrollIntoView({behavior:"smooth",block:"start"});
+  $("resultBox").querySelectorAll("[data-say]").forEach(b=>b.onclick=()=>speak(b.dataset.say));
+  $("retry").onclick = ()=>{ $("resultBox").classList.add("hidden"); $("answerBox").classList.remove("hidden"); $("answer").value=""; $("judge").disabled=false; };
+  $("next").onclick = ()=>{ if(idx<queue.length-1){ idx++; showQ(); } else { $("back").click(); } };
+}
+
+/* =========================================================
+   設定
+   ========================================================= */
+function openSettings(){
+  $("apiKey").value = settings.apiKey; $("model").value = settings.model;
+  $("autoSpeak").checked = settings.autoSpeak; $("rate").value = settings.rate;
+  $("settings").classList.remove("hidden");
+}
+function saveSettings(){
+  settings.apiKey = $("apiKey").value.trim();
+  settings.model = $("model").value.trim() || "claude-sonnet-5-5";
+  settings.autoSpeak = $("autoSpeak").checked;
+  settings.rate = $("rate").value;
+  LS.set("ske_settings",settings);
+}
+["apiKey","model"].forEach(id=>$(id).addEventListener("input",saveSettings));
+["autoSpeak","rate"].forEach(id=>$(id).addEventListener("change",saveSettings));
+$("openSettings").onclick = openSettings;
+$("closeSettings").onclick = ()=>{ saveSettings(); $("settings").classList.add("hidden"); renderHome(); };
+$("settings").onclick = e=>{ if(e.target.id==="settings") $("closeSettings").click(); };
+$("resetData").onclick = ()=>{
+  if(confirm("成績をすべてリセットしますか？")){ results={}; LS.set("ske_results",results); renderHome(); $("settings").classList.add("hidden"); }
+};
+
+renderHome();
+</script>
+</body>
+</html>
