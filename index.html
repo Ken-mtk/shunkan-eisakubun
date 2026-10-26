@@ -402,18 +402,22 @@ function speak(t){
    音声入力
    ========================================================= */
 const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-let rec = null, recOn = false, baseText = "";
+let rec = null, recOn = false, wantRec = false, baseText = "", recStart = 0, recTimer = null;
+const REC_MAX_MS = 60000; // 停止を押すまで最大60秒聞き続ける
 if(!SR){
   $("mic").disabled = true;
   $("micNote").textContent = "このブラウザは音声認識に未対応です。キーボードのマイクボタン（音声入力）をお使いください。";
   $("micNote").classList.remove("hidden");
 }
-function startRec(){
-  if(!SR) return;
-  speechSynthesis.cancel();
-  rec = new SR();
-  rec.lang = "en-US"; rec.interimResults = true; rec.continuous = false; rec.maxAlternatives = 1;
+function setMicUI(on){
+  $("mic").classList.toggle("rec", on);
+  $("mic").textContent = on ? "■ 話し終えたら停止" : "🎤 話す";
+}
+function runRec(){
+  // 1回分の認識セッション。ブラウザが無音で切っても、停止を押すまで自動で再開する
   baseText = $("answer").value.trim();
+  rec = new SR();
+  rec.lang = "en-US"; rec.interimResults = true; rec.continuous = true; rec.maxAlternatives = 1;
   rec.onresult = e=>{
     let txt = "";
     for(let i=0;i<e.results.length;i++) txt += e.results[i][0].transcript;
@@ -421,15 +425,36 @@ function startRec(){
   };
   rec.onerror = e=>{
     if(e.error==="not-allowed"||e.error==="service-not-allowed"){
+      wantRec = false;
       $("micNote").textContent = "マイクの使用が許可されていません。ブラウザの設定でマイクを許可してください。";
       $("micNote").classList.remove("hidden");
     }
   };
-  rec.onend = ()=>{ recOn=false; $("mic").classList.remove("rec"); $("mic").textContent="🎤 話す"; };
-  try{ rec.start(); recOn = true; $("mic").classList.add("rec"); $("mic").textContent="■ 停止"; }catch(e){}
+  rec.onend = ()=>{
+    recOn = false;
+    if(wantRec && Date.now()-recStart < REC_MAX_MS){
+      setTimeout(()=>{ if(wantRec) runRec(); }, 150);
+    }else{
+      wantRec = false; clearTimeout(recTimer); setMicUI(false);
+    }
+  };
+  try{ rec.start(); recOn = true; }catch(e){}
 }
-function stopRec(){ if(rec&&recOn){ try{rec.stop()}catch(e){} } }
-$("mic").onclick = ()=> recOn ? stopRec() : startRec();
+function startRec(){
+  if(!SR) return;
+  speechSynthesis.cancel();
+  wantRec = true; recStart = Date.now();
+  setMicUI(true);
+  clearTimeout(recTimer);
+  recTimer = setTimeout(stopRec, REC_MAX_MS);
+  runRec();
+}
+function stopRec(){
+  wantRec = false; clearTimeout(recTimer);
+  if(rec&&recOn){ try{rec.stop()}catch(e){} }
+  setMicUI(false);
+}
+$("mic").onclick = ()=> wantRec ? stopRec() : startRec();
 
 /* =========================================================
    判定
